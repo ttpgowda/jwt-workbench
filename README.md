@@ -44,7 +44,7 @@
 
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/jwt-workbench.git
+git clone https://github.com/ttpgowda/jwt-workbench.git
 cd jwt-workbench
 
 # Install dependencies
