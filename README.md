@@ -149,4 +149,4 @@ Add `base: '/jwt-workbench/'` to `vite.config.js` if deploying to a subpath.
 
 ## 📄 License
 
-MIT © [Your Name](https://github.com/YOUR_USERNAME)
+MIT © [ttpgowda](https://github.com/ttpgowda)
