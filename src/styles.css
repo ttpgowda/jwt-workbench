@@ -615,6 +615,36 @@ details summary::-webkit-details-marker { display: none; }
 details summary::before       { content: '▸ '; }
 details[open] summary::before { content: '▾ '; }
 
+
+/* ── Footer ── */
+.app-footer {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  padding: 20px 24px;
+  border-top: 1px solid var(--border);
+  margin-top: -30px;
+  position: relative;
+  z-index: 1;
+}
+
+.app-footer p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+.app-footer a {
+  color: var(--accent2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+  color: var(--accent);
+}
+
 /* ── Responsive ── */
 @media (max-width: 480px) {
   .wrapper { padding: 24px 16px 80px; }
