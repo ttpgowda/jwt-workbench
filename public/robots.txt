@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ttpgowda.github.io/jwt-workbench/sitemap.xml
