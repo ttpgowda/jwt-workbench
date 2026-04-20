@@ -600,6 +600,80 @@ pre.json {
 #toast[data-type="error"]   { border-color: var(--danger); color: var(--danger); }
 #toast[data-type="warn"]    { border-color: var(--warn);   color: var(--warn); }
 
+/* ── Modal ── */
+.modal {
+  border: none;
+  background: transparent;
+  margin: auto;
+  padding: 0;
+  max-width: 520px;
+  width: 90%;
+}
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+.modal-content {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px;
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.modal-header h2 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+.close-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+}
+.close-btn:hover {
+  color: var(--danger);
+  transform: scale(1.1);
+}
+.help-list {
+  padding-left: 20px;
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--text2);
+}
+.help-list li {
+  margin-bottom: 10px;
+}
+.help-list strong {
+  color: var(--accent);
+}
+.btn-text {
+  background: transparent;
+  border: none;
+  color: var(--text2);
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 6px 14px;
+  transition: all 0.15s;
+  border-radius: 50px;
+}
+.btn-text:hover {
+  color: var(--accent);
+  background: var(--surface2);
+}
+
 /* ── Details/summary collapse ── */
 details summary {
   cursor: pointer;

@@ -251,6 +251,23 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('copyEditedBtn')?.addEventListener('click', copyEditedToken);
   document.getElementById('useEditedBtn')?.addEventListener('click', useEditedToken);
 
+  // Help Modal
+  const helpBtn = document.getElementById('helpBtn');
+  const helpModal = document.getElementById('helpModal');
+  const closeHelpBtn = document.getElementById('closeHelpBtn');
+
+  if (helpBtn && helpModal && closeHelpBtn) {
+    helpBtn.addEventListener('click', () => helpModal.showModal());
+    closeHelpBtn.addEventListener('click', () => helpModal.close());
+    // Close on backdrop click
+    helpModal.addEventListener('click', (e) => {
+      const rect = helpModal.getBoundingClientRect();
+      const inDialog = e.clientX >= rect.left && e.clientX <= rect.right &&
+                       e.clientY >= rect.top && e.clientY <= rect.bottom;
+      if (!inDialog) helpModal.close();
+    });
+  }
+
   // Keyboard shortcut: Ctrl+Enter to decode
   document.getElementById('jwtInput')?.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') decodeAndVerify();

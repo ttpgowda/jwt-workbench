@@ -31,7 +31,10 @@
         <div class="tagline">decode · verify · extend · inspect</div>
       </div>
     </div>
-    <button id="themeToggle" aria-label="Toggle theme">☀ Light</button>
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <button id="helpBtn" class="btn-text" aria-label="How to use">❓ Help</button>
+      <button id="themeToggle" aria-label="Toggle theme">☀ Light</button>
+    </div>
   </header>
 
   <!-- ── Input Card ── -->
@@ -195,6 +198,28 @@
   </p>
 </footer>
 
+
+<!-- ── Help Modal ── -->
+<dialog id="helpModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>📖 How to Use</h2>
+      <button id="closeHelpBtn" class="close-btn" aria-label="Close help">✕</button>
+    </div>
+    <div class="modal-body">
+      <ol class="help-list">
+        <li><strong>Paste your JWT</strong>: Paste into the top input. It automatically parses and color-codes.</li>
+        <li><strong>Decode</strong>: View header and payload instantly. Copy or download the JSON safely.</li>
+        <li><strong>Verify Signature</strong>: Provide your HMAC secret or PEM key to mathematically verify the token.</li>
+        <li><strong>Extend Expiry</strong>: Select +1h, +1d, etc., and sign with your secret to get a fresh token.</li>
+        <li><strong>Edit Payload</strong>: Modify JSON directly, change claims, and re-sign with your secret.</li>
+      </ol>
+      <div class="warn-banner" style="margin-top: 16px;">
+        💡 <strong>Security check:</strong> Everything happens securely inside your browser. No tokens or secrets are sent anywhere.
+      </div>
+    </div>
+  </div>
+</dialog>
 
 <!-- Toast notification -->
 <div id="toast" role="status" aria-live="polite"></div>
