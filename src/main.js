@@ -188,10 +188,26 @@ function saveToken() {
 
 function loadToken() {
   const { token, secret } = loadFromStorage();
-  if (!token) { toast('⚠ Nothing saved', 2500, 'warn'); return; }
-  jwtInput().value    = token || '';
-  secretInput().value = secret || '';
+  if (!token && !secret) { toast('⚠ Nothing saved', 2500, 'warn'); return; }
+  
+  if (token) jwtInput().value = token;
+  
+  if (secret) {
+    secretInput().value = secret;
+    const cb = saveSecretCb();
+    if (cb) cb.checked = true;
+  }
+  
   toast('✓ Loaded');
+}
+
+function initSecret() {
+  const { secret } = loadFromStorage();
+  if (secret) {
+    secretInput().value = secret;
+    const cb = saveSecretCb();
+    if (cb) cb.checked = true;
+  }
 }
 
 function clearAll() {
@@ -213,6 +229,7 @@ function toggleSecret() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  initSecret();
 
   // Theme
   document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
