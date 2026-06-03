@@ -18,7 +18,7 @@
 | ✏️ **Edit Payload** | Modify any field in the JSON payload and re-sign |
 | 📋 **Copy & Download** | Copy decoded JSON or download `payload.json` |
 | 🎨 **Dark / Light theme** | Toggle between themes with your preference saved |
-| 🔐 **Security warnings** | Detects sensitive fields (email, phone, etc.) in tokens |
+| 🔐 **Security Analysis** | Automatically flags expired tokens, missing `aud`/`iss` claims, weak algorithms, long expiries, and sensitive fields |
 | 💾 **Save / Load** | Persist tokens to localStorage (secret opt-in only) |
 | 🎨 **Color-coded token** | Visual breakdown of header · payload · signature |
 | 📊 **Diff view** | See exactly what changed when extending a token |
@@ -153,7 +153,11 @@ Add `base: '/jwt-workbench/'` to `vite.config.js` if deploying to a subpath.
 
 - **Nothing is sent to a server.** All processing is client-side.
 - Secrets are **not persisted by default** — you must explicitly opt-in via the checkbox.
-- The tool detects and warns about tokens containing potentially sensitive fields.
+- **Deep Security Analysis**: The tool automatically scans decoded tokens to warn you about:
+  - Weak or insecure algorithms (e.g., `none`)
+  - Expired tokens or dangerously long expiries (> 1 year)
+  - Missing standard claims like `aud` (audience) and `iss` (issuer)
+  - Potentially sensitive fields (e.g., email, password, ssn, credit card)
 - Do not use this tool with production secrets on shared machines.
 
 ---

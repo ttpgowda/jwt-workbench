@@ -47,7 +47,7 @@ export function renderDecoded(header, payload) {
   document.getElementById('payloadOutput').textContent = JSON.stringify(payload, null, 2);
   renderClaimsTable(payload);
   renderStatus(payload);
-  renderSecurityWarning(payload);
+  renderSecurityWarning(header, payload);
 }
 
 function renderClaimsTable(payload) {
@@ -74,14 +74,46 @@ function renderClaimsTable(payload) {
   }
 }
 
-function renderSecurityWarning(payload) {
+function renderSecurityWarning(header, payload) {
   const banner = document.getElementById('securityWarning');
+  const warnings = [];
+
+  if (!header.alg || header.alg.toLowerCase() === 'none') {
+    warnings.push('Weak algorithm: "none" is insecure.');
+  }
+
+  const now = Math.floor(Date.now() / 1000);
+  if (payload.exp && payload.exp < now) {
+    warnings.push('Expired token.');
+  }
+
+  if (payload.exp && (payload.exp - now) > 31536000) {
+    warnings.push('Very long expiry (longer than 1 year).');
+  }
+
+  if (!payload.aud) {
+    warnings.push('Missing aud (audience) claim.');
+  }
+
+  if (!payload.iss) {
+    warnings.push('Missing iss (issuer) claim.');
+  }
+
   const sensitive = ['email', 'phone', 'ssn', 'password', 'credit', 'card'];
   const keys = Object.keys(payload).map((k) => k.toLowerCase());
   const found = sensitive.filter((s) => keys.some((k) => k.includes(s)));
   if (found.length > 0) {
+    warnings.push(`Sensitive fields detected: ${found.join(', ')}.`);
+  }
+
+  if (warnings.length > 0) {
     banner.style.display = 'block';
-    banner.textContent = `⚠ Sensitive fields detected: ${found.join(', ')}. Do not share this token.`;
+    let html = '<strong>⚠ Security Analysis:</strong><ul style="margin: 8px 0 0 20px; padding: 0;">';
+    warnings.forEach(w => {
+      html += `<li style="margin-bottom: 4px;">${w}</li>`;
+    });
+    html += '</ul>';
+    banner.innerHTML = html;
   } else {
     banner.style.display = 'none';
   }
