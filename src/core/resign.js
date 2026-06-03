@@ -16,11 +16,12 @@ export function resignJWT(header, payload, secret) {
   if (!payload) throw new Error('Payload is required.');
 
   const alg = header.alg || 'HS256';
+  const key = alg.startsWith('HS') ? { utf8: secret } : secret;
 
   return KJUR.jws.JWS.sign(
     alg,
     JSON.stringify(header),
     JSON.stringify(payload),
-    { utf8: secret }
+    key
   );
 }

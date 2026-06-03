@@ -25,6 +25,17 @@
 
 ---
 
+## 🔑 Supported Algorithms
+
+JWT Workbench natively supports both HMAC and public-key cryptography algorithms:
+- **HMAC**: `HS256`, `HS384`, `HS512`
+- **RSA**: `RS256`, `RS384`, `RS512`
+- **ECDSA**: `ES256`, `ES384`
+
+The tool automatically detects the algorithm from the token's header. Just provide your HMAC secret string or a valid PEM public/private key, and it will handle the rest.
+
+---
+
 ## 📖 How to Use
 
 1. **Paste your JWT**: Paste your JSON Web Token into the large input area at the top of the page. The token will automatically be color-coded into its Header, Payload, and Signature components.

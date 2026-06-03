@@ -23,11 +23,13 @@ export function extendJWT(token, secret, seconds) {
   const newPayload = { ...payload, exp: baseExp + seconds, iat: now };
 
   const alg = header.alg || 'HS256';
+  const key = alg.startsWith('HS') ? { utf8: secret } : secret;
+
   const newToken = KJUR.jws.JWS.sign(
     alg,
     JSON.stringify(header),
     JSON.stringify(newPayload),
-    { utf8: secret }
+    key
   );
 
   return { newToken, oldPayload: payload, newPayload };
