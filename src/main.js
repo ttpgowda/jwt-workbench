@@ -9,7 +9,7 @@ import { verifySignature } from './core/verify.js';
 import { extendJWT }       from './core/extend.js';
 import { resignJWT }       from './core/resign.js';
 
-import { renderDecoded, renderSigResult, renderTokenParts, renderEditTab, renderDiff, copyText, downloadJSON } from './ui/renderer.js';
+import { renderDecoded, renderSigResult, renderTokenParts, renderEditTab, renderDiff, copyText, downloadJSON, getSecurityWarnings } from './ui/renderer.js';
 import { switchTab }       from './ui/tabs.js';
 import { toast }           from './ui/toast.js';
 
@@ -21,6 +21,7 @@ const state = {
   currentToken:   null,
   currentHeader:  null,
   currentPayload: null,
+  signatureValid: null,
 };
 
 // ─── DOM Refs ─────────────────────────────────────────────────────────────────
@@ -70,7 +71,9 @@ function decodeAndVerify() {
     state.currentPayload = payload;
 
     renderDecoded(header, payload);
-    renderSigResult(secret ? verifySignature(token, secret, header.alg) : {});
+    const verifyResult = secret ? verifySignature(token, secret, header.alg) : null;
+    state.signatureValid = verifyResult ? verifyResult.valid : null;
+    renderSigResult(verifyResult || {});
     renderTokenParts(token);
     renderEditTab(payload);
 
@@ -175,6 +178,33 @@ function downloadPayloadJSON() {
   toast('✓ Downloading payload.json');
 }
 
+// ─── Debug Report ────────────────────────────────────────────────────────────
+
+function downloadDebugReport() {
+  if (!state.currentToken) { toast('⚠ Decode a token first', 2500, 'warn'); return; }
+
+  const parts = state.currentToken.split('.');
+  const safeToken = parts.length === 3 ? `${parts[0]}.${parts[1]}.[REDACTED]` : state.currentToken;
+
+  const warnings = getSecurityWarnings(state.currentHeader, state.currentPayload);
+  
+  const report = {
+    generatedAt: new Date().toISOString(),
+    tool: "JWT Workbench Debug Report",
+    token: {
+      format: parts.length === 3 ? "JWS" : "Unknown",
+      safeString: safeToken
+    },
+    header: state.currentHeader,
+    payload: state.currentPayload,
+    securityAnalysis: warnings,
+    signatureVerified: state.signatureValid
+  };
+
+  downloadJSON(report, 'jwt-debug-report.json');
+  toast('✓ Downloading debug report');
+}
+
 // ─── Save / Load / Clear ─────────────────────────────────────────────────────
 
 function saveToken() {
@@ -261,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Copy / download payload
   document.getElementById('copyPayloadBtn')?.addEventListener('click', copyPayloadJSON);
   document.getElementById('downloadPayloadBtn')?.addEventListener('click', downloadPayloadJSON);
+  document.getElementById('downloadDebugReportBtn')?.addEventListener('click', downloadDebugReport);
 
   // Edit tab
   document.getElementById('resignBtn')?.addEventListener('click', resignEdited);

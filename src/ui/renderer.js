@@ -74,8 +74,7 @@ function renderClaimsTable(payload) {
   }
 }
 
-function renderSecurityWarning(header, payload) {
-  const banner = document.getElementById('securityWarning');
+export function getSecurityWarnings(header, payload) {
   const warnings = [];
 
   if (!header.alg || header.alg.toLowerCase() === 'none') {
@@ -105,6 +104,13 @@ function renderSecurityWarning(header, payload) {
   if (found.length > 0) {
     warnings.push(`Sensitive fields detected: ${found.join(', ')}.`);
   }
+
+  return warnings;
+}
+
+function renderSecurityWarning(header, payload) {
+  const banner = document.getElementById('securityWarning');
+  const warnings = getSecurityWarnings(header, payload);
 
   if (warnings.length > 0) {
     banner.style.display = 'block';

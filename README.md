@@ -17,6 +17,7 @@
 | ⏱ **Extend** | Add 1h / 6h / 1d / 7d to the token expiry and re-sign |
 | ✏️ **Edit Payload** | Modify any field in the JSON payload and re-sign |
 | 📋 **Copy & Download** | Copy decoded JSON or download `payload.json` |
+| 🐞 **Debug Reports** | Generate shareable, sanitized JSON reports for bug tickets |
 | 🎨 **Dark / Light theme** | Toggle between themes with your preference saved |
 | 🔐 **Security Analysis** | Automatically flags expired tokens, missing `aud`/`iss` claims, weak algorithms, long expiries, and sensitive fields |
 | 💾 **Save / Load** | Persist tokens to localStorage (secret opt-in only) |
@@ -40,9 +41,10 @@ The tool automatically detects the algorithm from the token's header. Just provi
 
 1. **Paste your JWT**: Paste your JSON Web Token into the large input area at the top of the page. The token will automatically be color-coded into its Header, Payload, and Signature components.
 2. **Decode**: The "Decode" tab instantly visualizes the decoded Header and Payload. You can safely copy the JSON or download it for offline use.
-3. **Verify Signature**: Switch to the "Verify" tab to check the mathematical signature of the token. Enter your HMAC Secret or PEM Public Key, and the tool will indicate if the token is valid, expired, or has an invalid signature.
-4. **Extend Expiry**: Navigate to the "Extend" tab to quickly add time to your token's expiration (`exp` claim). Select an extension duration (1h, 1d, etc.), provide your signing secret, and generate a newly valid token.
-5. **Edit Payload**: Use the "Edit" tab to freely modify the JSON payload. Change user roles, update IDs, or add new claims, then provide your secret to instantly generate and re-sign your new token.
+3. **Debug Reports**: Need to attach token info to a Jira/GitHub issue? Click the "🐞 Debug Report" button to download a sanitized JSON report containing the decoded payload, header, signature verification status, and security warnings (with the token's actual signature safely redacted).
+4. **Verify Signature**: Switch to the "Verify" tab to check the mathematical signature of the token. Enter your HMAC Secret or PEM Public Key, and the tool will indicate if the token is valid, expired, or has an invalid signature.
+5. **Extend Expiry**: Navigate to the "Extend" tab to quickly add time to your token's expiration (`exp` claim). Select an extension duration (1h, 1d, etc.), provide your signing secret, and generate a newly valid token.
+6. **Edit Payload**: Use the "Edit" tab to freely modify the JSON payload. Change user roles, update IDs, or add new claims, then provide your secret to instantly generate and re-sign your new token.
 
 ---
 
