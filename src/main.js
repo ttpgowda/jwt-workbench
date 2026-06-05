@@ -261,6 +261,17 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initSecret();
 
+  // Load default demo token if no token is present
+  if (!jwtInput().value) {
+    const defaultToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzEyMyIsIm5hbWUiOiJBbGljZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4MDYzNzc3OSwiZXhwIjoxNzgwNjQxMzc5fQ.kk33vUxgJvtyueLeHBoK-EUreKnnxkQ_qr6-BE4JZ0E";
+    jwtInput().value = defaultToken;
+    if (!secretInput().value) {
+      secretInput().value = "super-secret-key";
+    }
+    // Automatically decode the demo token
+    setTimeout(() => decodeAndVerify(), 100);
+  }
+
   // Theme
   document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
 
